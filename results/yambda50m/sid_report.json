@@ -1,0 +1,45 @@
+{
+  "n_items": 283853,
+  "levels": [
+    256,
+    256,
+    256,
+    199
+  ],
+  "vocab_size": 969,
+  "dedup_size": 199,
+  "items_with_dedup": 0.2979535181942766,
+  "unique_prefixes": 199278,
+  "collab_coverage": 0.9679446755891253,
+  "audio_explained_var": 0.964283716063822,
+  "audio_to_collab_r2": 0.24993669522187922,
+  "level_stats": [
+    {
+      "level": 0,
+      "codebook_size": 256,
+      "utilization": 1.0,
+      "perplexity": 245.130737890951,
+      "residual_var_ratio": 0.5239285269811933
+    },
+    {
+      "level": 1,
+      "codebook_size": 256,
+      "utilization": 1.0,
+      "perplexity": 171.80039439189636,
+      "residual_var_ratio": 0.4477538285363291
+    },
+    {
+      "level": 2,
+      "codebook_size": 256,
+      "utilization": 1.0,
+      "perplexity": 100.9122225975261,
+      "residual_var_ratio": 0.41052009332021344
+    }
+  ],
+  "coherence": {
+    "cos_same_first_code": 0.4932602643966675,
+    "cos_random": 0.042772650718688965
+  },
+  "first_code_genre_purity": null,
+  "cold_items": 9099
+}

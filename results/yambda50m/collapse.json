@@ -1,0 +1,88 @@
+{
+  "curves": {
+    "hit": {
+      "Held-out NDCG@10 (all tracks)": {
+        "start": 0.13739415825557047,
+        "end": 0.15736090777610212,
+        "change_pct": 14.532458857086906
+      },
+      "Held-out NDCG@10 (new tracks)": {
+        "start": 0.02246637300680201,
+        "end": 0.022752652921978006,
+        "change_pct": 1.2742596016246999
+      },
+      "Held-out audit simulator": {
+        "start": 0.7126449942588806,
+        "end": 0.7139340043067932,
+        "change_pct": 0.18087688236035548
+      }
+    },
+    "single": {
+      "Reward being optimized": {
+        "start": 0.7340494394302368,
+        "end": 0.8054730296134949,
+        "change_pct": 9.730078976519138
+      },
+      "Held-out NDCG@10 (all tracks)": {
+        "start": 0.13739415825557047,
+        "end": 0.032853133789710866,
+        "change_pct": -76.08840564487474
+      },
+      "Held-out NDCG@10 (new tracks)": {
+        "start": 0.02246637300680201,
+        "end": 0.006322118533663517,
+        "change_pct": -71.85963870648187
+      },
+      "Held-out audit simulator": {
+        "start": 0.7126449942588806,
+        "end": 0.7393297553062439,
+        "change_pct": 3.7444676188477626
+      }
+    },
+    "ensemble": {
+      "Reward being optimized": {
+        "start": 0.6567529439926147,
+        "end": 0.716696560382843,
+        "change_pct": 9.12727029829688
+      },
+      "Held-out NDCG@10 (all tracks)": {
+        "start": 0.13739415825557047,
+        "end": 0.028877841658151486,
+        "change_pct": -78.9817543738395
+      },
+      "Held-out NDCG@10 (new tracks)": {
+        "start": 0.02246637300680201,
+        "end": 0.004467652115146927,
+        "change_pct": -80.11404816525445
+      },
+      "Held-out audit simulator": {
+        "start": 0.7126449942588806,
+        "end": 0.7589235305786133,
+        "change_pct": 6.49391165202252
+      }
+    },
+    "hybrid": {
+      "Held-out NDCG@10 (all tracks)": {
+        "start": 0.13739415825557047,
+        "end": 0.15358510855800875,
+        "change_pct": 11.78430765034498
+      },
+      "Held-out NDCG@10 (new tracks)": {
+        "start": 0.02246637300680201,
+        "end": 0.023913359112444424,
+        "change_pct": 6.4406751601796906
+      },
+      "Held-out audit simulator": {
+        "start": 0.7126449942588806,
+        "end": 0.7211229205131531,
+        "change_pct": 1.1896422935081625
+      }
+    }
+  },
+  "zero_variance_pct": {
+    "hit": 74.46875,
+    "single": 0.33125,
+    "ensemble": 0.38125,
+    "hybrid": 73.78125
+  }
+}

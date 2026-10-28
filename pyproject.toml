@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "encore"
+version = "0.1.0"
+description = "Generative music recommendation on Semantic IDs with pessimistic world-model GRPO"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Karthik Sundaram" }]
+dependencies = [
+  "torch>=2.2",
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "pyarrow>=14",
+  "scipy>=1.11",
+  "pyyaml>=6",
+  "matplotlib>=3.8",
+  "fastapi>=0.110",
+  "uvicorn>=0.27",
+  "huggingface_hub>=0.23",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+[project.scripts]
+encore = "encore.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["encore*"]
+
+[tool.setuptools.package-data]
+"encore.serve" = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

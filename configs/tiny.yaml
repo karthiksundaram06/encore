@@ -1,0 +1,72 @@
+inherit: base.yaml
+name: tiny
+paths:
+  raw: data/raw/synthetic_tiny
+  run: runs/tiny
+
+data:
+  source: synthetic
+  eval_history: 50
+  eval_max_users: 1500
+  min_user_train_events: 15
+  split:
+    test_days: 3
+    val_days: 3
+    gap_minutes: 30
+
+sid:
+  levels: [16, 16, 16]
+  collab_dim: 32
+  audio_dim: 32
+  kmeans_iters: 20
+
+sasrec:
+  d_model: 64
+  n_heads: 2
+  history: 50
+  epochs: 8
+  batch_size: 64
+
+two_tower:
+  d_model: 64
+  history: 50
+  epochs: 8
+  batch_size: 64
+
+generator:
+  d_model: 96
+  n_layers: 3
+  n_heads: 4
+  history: 50
+  epochs: 6
+  batch_size: 64
+  lr: 1.0e-3
+  warmup_steps: 50
+  eval_users: 300
+  eval_beam: 20
+
+world:
+  members: 4
+  d_model: 64
+  n_layers: 2
+  history: 50
+  epochs: 3
+  batch_size: 64
+
+grpo:
+  steps: 150
+  contexts_per_step: 16
+  group_size: 8
+  lr: 5.0e-5
+  eval_every: 10
+  eval_users: 300
+  eval_beam: 20
+
+eval:
+  ks: [10, 50]
+  beam: 50
+  max_users: 1000
+
+serve:
+  beam: 30
+  k: 12

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Encore demo</title>
+<style>
+  :root {
+    --bg: #f7f6f3; --panel: #ffffff; --ink: #141413; --ink-2: #5d5c57; --ink-3: #8a8983;
+    --line: #e4e2dc; --accent: #2a78d6; --good: #0ca30c; --bad: #d03b3b; --warn: #c98500;
+    --chip: #f1f0ec; --radius: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #151514; --panel: #1e1e1c; --ink: #f0efec; --ink-2: #c3c2b7; --ink-3: #8f8e86;
+            --line: #33332f; --accent: #5598e7; --chip: #2a2a27; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { display: flex; align-items: baseline; gap: 14px; padding: 18px 24px 10px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 20px; letter-spacing: -0.01em; }
+  header .sub { color: var(--ink-2); }
+  main { display: grid; grid-template-columns: minmax(280px, 360px) 1fr; gap: 16px; padding: 8px 24px 32px; }
+  @media (max-width: 860px) { main { grid-template-columns: 1fr; padding: 8px 16px 24px; } header { padding: 16px; } }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; }
+  .panel h2 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); }
+  .users { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  button { font: inherit; border: 1px solid var(--line); background: var(--chip); color: var(--ink);
+           border-radius: 8px; padding: 5px 10px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .history { display: flex; flex-direction: column; gap: 4px; max-height: 60vh; overflow: auto; padding-right: 4px; }
+  .ev { display: grid; grid-template-columns: 10px 1fr auto auto; align-items: center; gap: 8px;
+        padding: 5px 8px; border-radius: 8px; background: var(--chip); }
+  .sw { width: 10px; height: 26px; border-radius: 3px; }
+  .name { font-variant-numeric: tabular-nums; }
+  .sid { color: var(--ink-3); font-size: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .fb { font-size: 12px; padding: 2px 7px; border-radius: 99px; border: 1px solid var(--line); cursor: pointer; background: var(--panel); }
+  .fb.like { color: var(--good); } .fb.dislike { color: var(--bad); } .fb.skip { color: var(--ink-3); }
+  .x { border: none; background: none; color: var(--ink-3); padding: 2px 4px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-bottom: 14px; color: var(--ink-2); }
+  .controls label { display: flex; align-items: center; gap: 6px; }
+  select, input[type=number] { font: inherit; background: var(--chip); color: var(--ink); border: 1px solid var(--line);
+                               border-radius: 6px; padding: 3px 6px; }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .col h3 { margin: 0 0 2px; font-size: 15px; }
+  .col .lat { color: var(--ink-3); font-size: 12px; margin-bottom: 8px; }
+  .rec { display: grid; grid-template-columns: 10px 1fr auto; gap: 8px; align-items: center; padding: 6px 8px;
+         border-radius: 8px; border: 1px solid transparent; }
+  .rec:hover { border-color: var(--line); background: var(--chip); }
+  .badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 2px; }
+  .badge { font-size: 11px; padding: 0 6px; border-radius: 99px; border: 1px solid var(--line); color: var(--ink-2); }
+  .badge.hit { color: var(--good); border-color: var(--good); }
+  .badge.cold { color: var(--accent); border-color: var(--accent); }
+  .badge.rep { color: var(--warn); border-color: var(--warn); }
+  .acts button { padding: 2px 6px; font-size: 12px; }
+  .note { color: var(--ink-3); font-size: 12px; margin-top: 10px; }
+  .empty { color: var(--ink-3); padding: 20px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Encore</h1>
+  <span class="sub" id="sub">generative recommendation on Semantic IDs</span>
+</header>
+<main>
+  <section class="panel">
+    <h2>Listener</h2>
+    <div class="users" id="users"></div>
+    <h2>History <span id="hcount" class="sid"></span></h2>
+    <div class="history" id="history"></div>
+    <div class="note">Click a feedback pill to cycle it. Colour = first Semantic-ID code (the coarse sound/taste cluster).</div>
+  </section>
+  <section class="panel">
+    <div class="controls">
+      <label>Beam <input type="number" id="beam" min="1" max="200" value="30" style="width:64px"></label>
+      <label>Top-k <input type="number" id="k" min="1" max="50" value="12" style="width:56px"></label>
+      <label><input type="checkbox" id="excl"> Nothing from my recent history</label>
+      <label>Boost cluster <select id="boost"><option value="">none</option></select></label>
+    </div>
+    <div class="cols" id="cols"><div class="empty">Pick a listener to start.</div></div>
+    <div class="note">Green "listened" = the user actually completed this track in the held-out window. Use ▶ ♥ ⏭ to add a recommendation to the history and watch the next set change.</div>
+  </section>
+</main>
+<script>
+const FB = {1: "skip", 2: "complete", 3: "like", 4: "dislike"};
+const CYCLE = [2, 3, 1, 4];
+let meta = null, user = null, history = [], targets = new Set();
+const $ = (id) => document.getElementById(id);
+const hue = (c) => `hsl(${Math.round((c * 360) / meta.levels[0])} 62% 52%)`;
+const sid = (codes) => codes.join("·");
+
+async function api(path, body) {
+  const r = await fetch(path, body ? {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)} : {});
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+function renderHistory() {
+  $("hcount").textContent = `${history.length} events`;
+  const h = $("history");
+  h.innerHTML = "";
+  [...history].reverse().forEach((e, ri) => {
+    const i = history.length - 1 - ri;
+    const row = document.createElement("div");
+    row.className = "ev";
+    row.innerHTML = `<div class="sw" style="background:${hue(e.codes[0])}"></div>
+      <div><div class="name">Track ${e.raw_id}${e.cold ? " · new" : ""}</div><div class="sid">${sid(e.codes)}</div></div>
+      <span class="fb ${FB[e.fb]}">${FB[e.fb]}</span><button class="x" title="remove">✕</button>`;
+    row.querySelector(".fb").onclick = () => { e.fb = CYCLE[(CYCLE.indexOf(e.fb) + 1) % CYCLE.length]; refresh(); };
+    row.querySelector(".x").onclick = () => { history.splice(i, 1); refresh(); };
+    h.appendChild(row);
+  });
+  const codes = [...new Set(history.map((e) => e.codes[0]))].sort((a, b) => a - b);
+  const sel = $("boost"), cur = sel.value;
+  sel.innerHTML = '<option value="">none</option>' + codes.map((c) => `<option value="${c}">cluster ${c}</option>`).join("");
+  sel.value = codes.includes(Number(cur)) ? cur : "";
+}
+
+async function renderRecs() {
+  if (!history.length) return;
+  const body = {
+    history: history.map((e) => ({item: e.item, fb: e.fb})),
+    k: Number($("k").value), beam: Number($("beam").value),
+    exclude_recent: $("excl").checked ? history.length : 0,
+    boost_code: $("boost").value === "" ? null : Number($("boost").value),
+  };
+  const res = await api("/api/recommend", body);
+  const cols = $("cols");
+  cols.innerHTML = "";
+  for (const [name, r] of Object.entries(res)) {
+    const col = document.createElement("div");
+    col.className = "col";
+    const hits = r.items.filter((x) => targets.has(x.item)).length;
+    col.innerHTML = `<h3>${name.replace("grpo_", "GRPO · ").replace("sft", "SFT")}</h3>
+      <div class="lat">${r.latency_ms.toFixed(1)} ms · ${hits}/${r.items.length} listened</div>`;
+    r.items.forEach((x) => {
+      const row = document.createElement("div");
+      row.className = "rec";
+      const b = [];
+      if (targets.has(x.item)) b.push('<span class="badge hit">listened</span>');
+      if (x.cold) b.push('<span class="badge cold">new release</span>');
+      if (x.in_history) b.push('<span class="badge rep">repeat</span>');
+      b.push(`<span class="badge">pop #${x.pop_rank + 1}</span>`);
+      row.innerHTML = `<div class="sw" style="background:${hue(x.codes[0])}"></div>
+        <div><div class="name">Track ${x.raw_id}</div><div class="sid">${sid(x.codes)}</div><div class="badges">${b.join("")}</div></div>
+        <div class="acts"><button title="listen">▶</button><button title="like">♥</button><button title="skip">⏭</button></div>`;
+      const [p, l, s] = row.querySelectorAll("button");
+      const add = (fb) => { history.push({...x, fb}); refresh(); };
+      p.onclick = () => add(2); l.onclick = () => add(3); s.onclick = () => add(1);
+      col.appendChild(row);
+    });
+    cols.appendChild(col);
+  }
+}
+
+async function refresh() { renderHistory(); try { await renderRecs(); } catch (e) { $("cols").innerHTML = `<div class="empty">${e}</div>`; } }
+
+async function init() {
+  meta = await api("/api/meta");
+  $("beam").value = meta.default_beam; $("k").value = meta.default_k;
+  $("sub").textContent = `${meta.dataset} · ${meta.n_items.toLocaleString()} tracks · Semantic IDs ${meta.levels.join("×")} · models: ${meta.models.join(", ")}`;
+  const users = await api("/api/users?n=8&seed=7");
+  const box = $("users");
+  users.forEach((u, i) => {
+    const b = document.createElement("button");
+    b.textContent = `Listener ${u.uid}`;
+    b.onclick = () => {
+      box.querySelectorAll("button").forEach((x) => x.classList.remove("active"));
+      b.classList.add("active");
+      user = u; history = u.history.map((e) => ({...e})); targets = new Set(u.targets);
+      refresh();
+    };
+    box.appendChild(b);
+    if (i === 0) b.click();
+  });
+  ["beam", "k", "excl", "boost"].forEach((id) => $(id).onchange = renderRecs);
+}
+init();
+</script>
+</body>
+</html>

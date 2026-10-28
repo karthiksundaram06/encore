@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[dev]"
+      - name: Unit tests
+        run: pytest
+      - name: End-to-end pipeline on synthetic data
+        run: python -m encore pipeline --config configs/ci.yaml
+      - name: Regression check
+        run: python -m encore check --config configs/ci.yaml
+      - name: Serving smoke test
+        run: |
+          ENCORE_CONFIG=configs/ci.yaml python - <<'EOF'
+          from fastapi.testclient import TestClient
+          from encore.serve.app import app_from_env
+          c = TestClient(app_from_env())
+          assert c.get("/health").json()["status"] == "ok"
+          u = c.get("/api/users?n=1").json()[0]
+          r = c.post("/api/recommend", json={"history": u["history"], "k": 5}).json()
+          assert all(len(v["items"]) == 5 for v in r.values())
+          print("serving ok", {k: round(v["latency_ms"], 1) for k, v in r.items()})
+          EOF
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ci-reports
+          path: runs/ci/reports

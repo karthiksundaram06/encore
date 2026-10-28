@@ -1,0 +1,55 @@
+{
+  "curves": {
+    "single": {
+      "Reward being optimized": {
+        "start": 1.5973730087280273,
+        "end": 1.937751293182373,
+        "change_pct": 21.308628767014515
+      },
+      "Held-out NDCG@10": {
+        "start": 0.09948732466182908,
+        "end": 0.0546008513474272,
+        "change_pct": -45.11778105098021
+      },
+      "True listener utility": {
+        "start": 1.6006043496897764,
+        "end": 1.7471537171579763,
+        "change_pct": 9.15587712207602
+      }
+    },
+    "ensemble": {
+      "Reward being optimized": {
+        "start": 1.5203404426574707,
+        "end": 1.8440178632736206,
+        "change_pct": 21.2897987539146
+      },
+      "Held-out NDCG@10": {
+        "start": 0.09948732466182908,
+        "end": 0.054928335075749714,
+        "change_pct": -44.78860974253898
+      },
+      "True listener utility": {
+        "start": 1.6006043496897764,
+        "end": 1.7081231274117938,
+        "change_pct": 6.717386326162138
+      }
+    },
+    "oracle": {
+      "Held-out NDCG@10": {
+        "start": 0.09948732466182908,
+        "end": 0.0561049768411081,
+        "change_pct": -43.60590453928022
+      },
+      "True listener utility": {
+        "start": 1.6006043496897764,
+        "end": 1.8553823958093147,
+        "change_pct": 15.917615503726362
+      }
+    }
+  },
+  "zero_variance_pct": {
+    "hit": 86.0,
+    "single": 0.0,
+    "ensemble": 0.0
+  }
+}

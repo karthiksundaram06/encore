@@ -1,0 +1,28 @@
+{
+  "source": "yambda",
+  "n_users": 8917,
+  "n_items": 283853,
+  "n_warm": 274754,
+  "n_cold": 9099,
+  "n_events": 44995564,
+  "events_per_split": {
+    "0": 44561837,
+    "1": 210298,
+    "2": 223429
+  },
+  "positive_rate": 0.6406185285287234,
+  "like_rate": 0.01758891165360212,
+  "dislike_rate": 0.0018264022648988242,
+  "organic_rate": 0.5115487162245593,
+  "audio_dim": 128,
+  "time": {
+    "t_min": 0,
+    "t_max": 26000000,
+    "val_start": 25827200.0,
+    "test_start": 25913600.0,
+    "span_days": 300.9259259259259,
+    "gap_units": 1800.0
+  },
+  "time_unit_seconds": 1,
+  "eval_history": 200
+}

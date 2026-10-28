@@ -1,0 +1,75 @@
+{
+  "members": {
+    "0": {
+      "auc_complete": 0.7147919303916663,
+      "auc_like": 0.7479066785297067,
+      "auc_dislike": 0.7720135102245418,
+      "mae_ratio": 0.2662073075771332,
+      "ece_complete": 0.02801753140978106,
+      "brier_complete": 0.1968270093202591
+    },
+    "1": {
+      "auc_complete": 0.7153776126095,
+      "auc_like": 0.7474220333307461,
+      "auc_dislike": 0.7706586731440097,
+      "mae_ratio": 0.26816511154174805,
+      "ece_complete": 0.02373487939297352,
+      "brier_complete": 0.1965366154909134
+    },
+    "2": {
+      "auc_complete": 0.7091876406628447,
+      "auc_like": 0.7433511423012985,
+      "auc_dislike": 0.7618525007562094,
+      "mae_ratio": 0.26718348264694214,
+      "ece_complete": 0.03059800457313061,
+      "brier_complete": 0.19876986742019653
+    },
+    "3": {
+      "auc_complete": 0.7115967977921015,
+      "auc_like": 0.7450121089003037,
+      "auc_dislike": 0.758890792620256,
+      "mae_ratio": 0.2667955756187439,
+      "ece_complete": 0.02527902279732091,
+      "brier_complete": 0.19763386249542236
+    },
+    "audit": {
+      "auc_complete": 0.711755030446582,
+      "auc_like": 0.746021535546586,
+      "auc_dislike": 0.7655779400695336,
+      "mae_ratio": 0.2671394348144531,
+      "ece_complete": 0.026296134894784752,
+      "brier_complete": 0.19753068685531616
+    }
+  },
+  "ensemble": {
+    "auc_complete": 0.7206776372764201,
+    "auc_like": 0.7516557643237368,
+    "auc_dislike": 0.7866110375944859,
+    "mae_ratio": 0.26013806462287903,
+    "ece_complete": 0.01548931005350664,
+    "brier_complete": 0.19444255530834198
+  },
+  "n_val_events": 21803,
+  "uncertainty": {
+    "spearman_std_vs_abs_error_complete": 0.39765314500476096,
+    "mean_std_complete": 0.04709233343601227
+  },
+  "ood": {
+    "logged": {
+      "ensemble_std": 0.10346757620573044,
+      "member0_minus_mean": 0.09390228986740112,
+      "spearman_mean_vs_true": 0.7867132227537549,
+      "spearman_member0_vs_true": 0.7805333869399659,
+      "spearman_std_vs_abs_error": 0.05723043889438509,
+      "mean_abs_error": 0.35701293716723603
+    },
+    "random": {
+      "ensemble_std": 0.11872760206460953,
+      "member0_minus_mean": 0.109783835709095,
+      "spearman_mean_vs_true": 0.724345554260617,
+      "spearman_member0_vs_true": 0.715960393773377,
+      "spearman_std_vs_abs_error": 0.09269001074333452,
+      "mean_abs_error": 0.4336659887751363
+    }
+  }
+}

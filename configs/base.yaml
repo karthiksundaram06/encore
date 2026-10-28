@@ -1,0 +1,186 @@
+name: base
+seed: 0
+device: auto
+amp: true
+num_threads: null
+
+paths:
+  raw: data/raw/base
+  run: runs/base
+
+data:
+  source: synthetic
+  time_unit_seconds: 5
+  files:
+    listens: listens.parquet
+    likes: likes.parquet
+    dislikes: dislikes.parquet
+    embeddings: embeddings.parquet
+  columns:
+    uid: uid
+    timestamp: timestamp
+    item_id: item_id
+    is_organic: is_organic
+    played_ratio_pct: played_ratio_pct
+    embedding: [normalized_embed, embed]
+  positive_threshold: 50
+  like_window_minutes: 60
+  min_item_positives: 3
+  min_user_train_events: 20
+  max_items: null
+  eval_history: 200
+  eval_min_history: 5
+  eval_max_users: 5000
+  split:
+    test_days: 1
+    val_days: 1
+    gap_minutes: 30
+  yambda:
+    repo_id: yandex/yambda
+    size: 50m
+  synthetic:
+    n_users: 2000
+    n_items: 2500
+    n_genres: 24
+    latent_dim: 16
+    audio_dim: 48
+    n_days: 60
+    events_mean: 150
+    events_min: 30
+    events_max: 400
+    session_len: 12
+    organic_rate: 0.40
+    repeat_rate: 0.10
+    organic_pool: 100
+    organic_temperature: 1.5
+    reco_pool: 100
+    exposure_sigma: 1.0
+    logging_personalization: 1.5
+    logging_noise: 0.6
+    audio_noise: 0.6
+    late_release_frac: 0.05
+    late_release_days: 4
+    state_rate: 0.2
+    fatigue: 0.4
+    sharpness: 1.6
+    like_threshold: 1.6
+    dislike_threshold: -1.0
+
+sid:
+  levels: [256, 256, 256]
+  kmeans_iters: 25
+  kmeans_init_sample: 100000
+  collab_source: sasrec
+  collab_dim: 64
+  ppmi_window: 3
+  ppmi_max_pairs: 200000000
+  audio_dim: 64
+  audio_weight: 0.4
+  ridge_lambda: 1.0
+  dedup_warn: 64
+
+popularity:
+  window_days: 7
+
+sasrec:
+  d_model: 128
+  n_layers: 2
+  n_heads: 2
+  history: 200
+  dropout: 0.2
+  epochs: 10
+  batch_size: 128
+  lr: 1.0e-3
+  weight_decay: 0.01
+  num_negatives: 0
+
+two_tower:
+  d_model: 128
+  history: 200
+  epochs: 10
+  batch_size: 128
+  lr: 1.0e-3
+  weight_decay: 0.0
+  temperature: 0.05
+  id_dropout: 0.2
+  max_pairs_per_batch: 4096
+
+generator:
+  d_model: 256
+  n_layers: 4
+  n_heads: 4
+  ff_mult: 4
+  dropout: 0.1
+  history: 100
+  epochs: 10
+  batch_size: 64
+  lr: 5.0e-4
+  weight_decay: 0.05
+  warmup_steps: 200
+  eval_users: 500
+  eval_beam: 20
+  patience: 3
+
+world:
+  members: 5
+  d_model: 128
+  n_layers: 2
+  n_heads: 2
+  history: 100
+  dropout: 0.1
+  id_dropout: 0.1
+  epochs: 5
+  batch_size: 128
+  lr: 1.0e-3
+  weight_decay: 0.01
+  bootstrap: true
+  prior_scale: 0.5
+  audit: true
+  loss_weights:
+    complete: 1.0
+    ratio: 0.5
+    like: 1.0
+    dislike: 1.0
+
+reward:
+  weights:
+    complete: 1.0
+    ratio: 0.0
+    like: 2.0
+    dislike: 2.0
+  pessimism: 1.0
+  diversity: 0.1
+  hybrid_beta: 0.5
+  hybrid_std_floor: 0.1
+
+grpo:
+  steps: 500
+  contexts_per_step: 32
+  group_size: 16
+  temperature: 1.0
+  lr: 2.0e-5
+  weight_decay: 0.0
+  kl_coef: 0.1
+  clip_eps: 0.2
+  ppo_epochs: 1
+  max_grad_norm: 1.0
+  eval_every: 25
+  eval_users: 500
+  eval_beam: 20
+  hit_horizon: 10
+  min_history: 5
+  modes: [hit, single, ensemble, hybrid, oracle]
+  select_metric: ndcg@10
+
+eval:
+  ks: [10, 50, 100]
+  beam: 100
+  batch_size: 64
+  max_users: 2000
+  beam_cache_gb: 3.0
+
+serve:
+  host: 0.0.0.0
+  port: 8000
+  beam: 50
+  k: 20

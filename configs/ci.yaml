@@ -1,0 +1,44 @@
+inherit: tiny.yaml
+name: ci
+paths:
+  raw: data/raw/synthetic_ci
+  run: runs/ci
+
+data:
+  eval_max_users: 300
+  synthetic:
+    n_users: 400
+    n_items: 600
+    n_genres: 10
+    events_mean: 80
+    events_max: 160
+    n_days: 30
+
+sid:
+  levels: [8, 8, 8]
+
+sasrec:
+  epochs: 3
+
+two_tower:
+  epochs: 3
+
+generator:
+  d_model: 64
+  n_layers: 2
+  epochs: 4
+  eval_users: 100
+
+world:
+  members: 3
+  epochs: 2
+
+grpo:
+  steps: 12
+  eval_every: 6
+  eval_users: 100
+
+eval:
+  beam: 20
+  ks: [10, 20]
+  max_users: 300

@@ -1,0 +1,75 @@
+{
+  "members": {
+    "0": {
+      "auc_complete": 0.8787762423235531,
+      "auc_like": 0.9144148745076326,
+      "auc_dislike": 0.8734645938237368,
+      "mae_ratio": 0.22194650769233704,
+      "ece_complete": 0.016895731984616844,
+      "brier_complete": 0.13046500086784363
+    },
+    "1": {
+      "auc_complete": 0.877867790509629,
+      "auc_like": 0.9163598915169653,
+      "auc_dislike": 0.8860289391400877,
+      "mae_ratio": 0.2268155813217163,
+      "ece_complete": 0.006840978396436273,
+      "brier_complete": 0.13059073686599731
+    },
+    "2": {
+      "auc_complete": 0.8789818717939198,
+      "auc_like": 0.913347608475964,
+      "auc_dislike": 0.8862133558411036,
+      "mae_ratio": 0.22774289548397064,
+      "ece_complete": 0.006546046625242749,
+      "brier_complete": 0.12999817728996277
+    },
+    "3": {
+      "auc_complete": 0.8784490285360668,
+      "auc_like": 0.9146391805668151,
+      "auc_dislike": 0.8798076788493698,
+      "mae_ratio": 0.2249089628458023,
+      "ece_complete": 0.0122434334257674,
+      "brier_complete": 0.13024558126926422
+    },
+    "4": {
+      "auc_complete": 0.8791435643019295,
+      "auc_like": 0.9124948545987304,
+      "auc_dislike": 0.8836983022229316,
+      "mae_ratio": 0.2248154878616333,
+      "ece_complete": 0.007895830734159351,
+      "brier_complete": 0.12984023988246918
+    },
+    "audit": {
+      "auc_complete": 0.8787875814146365,
+      "auc_like": 0.9144348916458581,
+      "auc_dislike": 0.890529515220889,
+      "mae_ratio": 0.2245628833770752,
+      "ece_complete": 0.010827275368699006,
+      "brier_complete": 0.13019120693206787
+    }
+  },
+  "ensemble": {
+    "auc_complete": 0.8831366473814227,
+    "auc_like": 0.9192116140863313,
+    "auc_dislike": 0.8938271487568408,
+    "mae_ratio": 0.2246708869934082,
+    "ece_complete": 0.00418710665702533,
+    "brier_complete": 0.1275625228881836
+  },
+  "n_val_events": 282637,
+  "uncertainty": {
+    "spearman_std_vs_abs_error_complete": 0.7609302242641017,
+    "mean_std_complete": 0.039067622274160385
+  },
+  "ood": {
+    "logged": {
+      "ensemble_std": 0.06465069949626923,
+      "member0_minus_mean": 0.057868435978889465
+    },
+    "random": {
+      "ensemble_std": 0.0897383764386177,
+      "member0_minus_mean": 0.07754597812891006
+    }
+  }
+}

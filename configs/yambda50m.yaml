@@ -1,0 +1,81 @@
+inherit: base.yaml
+name: yambda50m
+paths:
+  raw: data/raw/yambda
+  run: runs/yambda50m
+
+data:
+  source: yambda
+  time_unit_seconds: 1
+  files:
+    listens: flat/50m/listens.parquet
+    likes: flat/50m/likes.parquet
+    dislikes: flat/50m/dislikes.parquet
+    embeddings: embeddings.parquet
+  min_item_positives: 5
+  min_user_train_events: 50
+  max_items: 500000
+  eval_history: 200
+  eval_max_users: 10000
+  split:
+    test_days: 1
+    val_days: 1
+    gap_minutes: 30
+
+sid:
+  levels: [256, 256, 256]
+  collab_dim: 64
+  audio_dim: 64
+  kmeans_iters: 25
+
+sasrec:
+  d_model: 256
+  n_layers: 2
+  n_heads: 4
+  history: 200
+  epochs: 15
+  batch_size: 128
+  num_negatives: 2048
+
+two_tower:
+  d_model: 256
+  history: 200
+  epochs: 10
+  batch_size: 128
+  max_pairs_per_batch: 8192
+
+generator:
+  d_model: 512
+  n_layers: 8
+  n_heads: 8
+  history: 100
+  epochs: 4
+  batch_size: 48
+  lr: 3.0e-4
+  warmup_steps: 2000
+  eval_users: 1000
+  eval_beam: 20
+
+world:
+  members: 5
+  d_model: 256
+  n_layers: 3
+  n_heads: 4
+  history: 100
+  epochs: 2
+  batch_size: 128
+
+grpo:
+  steps: 1000
+  contexts_per_step: 16
+  group_size: 16
+  lr: 1.0e-5
+  eval_every: 50
+  eval_users: 1000
+  eval_beam: 20
+
+eval:
+  ks: [10, 50, 100]
+  beam: 100
+  batch_size: 32
+  max_users: 5000
