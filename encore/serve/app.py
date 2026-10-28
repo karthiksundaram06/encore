@@ -45,7 +45,7 @@ def create_app(cfg):
     pop_rank[np.argsort(-store.train_positives)] = np.arange(store.n_items)
     H = cfg.generator.history
     models = {}
-    for name in ["sft", "grpo_ensemble", "grpo_single", "grpo_hit", "grpo_oracle"]:
+    for name in ["sft", "grpo_hybrid", "grpo_hit", "grpo_ensemble", "grpo_single", "grpo_oracle"]:
         p = paths.ckpt / f"{name}.pt"
         if p.exists():
             m, _ = load_generator(p, device)

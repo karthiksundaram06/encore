@@ -1,5 +1,7 @@
 # Encore
 
+[![CI](https://github.com/KarthikSundaram4419/encore/actions/workflows/ci.yml/badge.svg)](https://github.com/KarthikSundaram4419/encore/actions/workflows/ci.yml)
+
 **Generative music recommendation on Semantic IDs, post-trained with GRPO against a pessimistic ensemble of listener world models.**
 
 A transformer recommends tracks by *writing their Semantic IDs* token by token, the way a language model writes words. It is then improved with reinforcement learning (GRPO).
@@ -158,6 +160,7 @@ Yambda-50M (or a synthetic world with a hidden true listener)
 ## Quickstart
 
 ```bash
+git clone https://github.com/KarthikSundaram4419/encore.git && cd encore
 pip install -e ".[dev]"                           # after installing PyTorch for your GPU
 pytest                                            # 23 tests: KV cache, beam == exhaustive, trie, metrics
 python -m encore pipeline --config configs/tiny.yaml

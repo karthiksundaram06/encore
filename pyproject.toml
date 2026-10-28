@@ -23,6 +23,9 @@ dependencies = [
   "huggingface_hub>=0.23",
 ]
 
+[project.urls]
+Repository = "https://github.com/KarthikSundaram4419/encore"
+
 [project.optional-dependencies]
 dev = ["pytest>=8", "httpx>=0.27"]
 
